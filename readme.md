@@ -11,6 +11,7 @@ AutoIt v3 is a freeware BASIC-like scripting language designed for automating th
 AutoIt was initially designed for PC "roll out" situations to reliably automate and configure thousands of PCs. Over time it has become a powerful language that supports complex expressions, user functions, loops and everything else that veteran scripters would expect.
 
 Features:
+
 - Easy to learn BASIC-like syntax
 - Simulate keystrokes and mouse movements
 - Manipulate windows and processes
@@ -42,30 +43,31 @@ The goal of this project is to bring Windows API access and automation to Ruby. 
 
 2. Include the file in your project like this:
 
-    require 'autoitwrapper.rb' # make sure the file is in the same directory
-    include AutoIt # useful if you don't want to always use AutoIt:: before everything
+        require 'autoitwrapper.rb' # make sure the file is in the same directory
+        include AutoIt # useful if you don't want to always use AutoIt:: before everything
 
 3. Start automating windows. (WARNING: hardly anything works yet, look at the "Contribute" section)
 
-    # Clipboard Access
-    myclip = Clipboard.new
-    myclip.put "I love ruby!", " Go to http://github.com/stevenheidel/ruby-autoit to contribute."
-    puts myclip.get.upcase[0..11] #=> "I LOVE RUBY!"
+        # Clipboard Access
+        clipboard = Clipboard.new
+        clipboard.put "I love ruby!", " Go to http://github.com/stevenheidel/ruby-autoit to contribute."
+        puts clipboard.get.upcase[0..11] #=> "I LOVE RUBY!"
 
 4. Read the documentation for how to use. (TODO: generate RDoc documentation)
 
-5. Contribute your opinions on how you'd like to be able to use AutoIt from Ruby
+5. Contribute your opinions on how you'd like to be able to use AutoIt from Ruby.
 
 ## Contribute
 
 Things to do:
+
 - Add remainder of functions as described in the AutoItX3 help file
 - Standardize the return values and error outcomes
 - Send me ideas on what functions/classes should do in order to make the most sense
 
 ## Useful Links
 
-[AutoItX3 Support Forum](http://www.autoitscript.com/forum/index.php?s=2d5bc3fac66e734a24edf8caaa6a1842&showforum=14)
-[Good idea to make a library](http://tech.waltco.biz/2008/02/23/use-swig-to-build-a-ruby-extension-to-wrap-a-windows-dll/)
-[Useful Introduction](http://actsasbuffoon.wordpress.com/2008/12/30/introduction-to-autoitx3/)
-[Eventual Goal: No relying on AutoIt](http://raa.ruby-lang.org/project/win32-guitest/)
+- [AutoItX3 Support Forum](http://www.autoitscript.com/forum/index.php?s=2d5bc3fac66e734a24edf8caaa6a1842&showforum=14)
+- [Good idea to make a library](http://tech.waltco.biz/2008/02/23/use-swig-to-build-a-ruby-extension-to-wrap-a-windows-dll/)
+- [Useful Introduction](http://actsasbuffoon.wordpress.com/2008/12/30/introduction-to-autoitx3/)
+* [Eventual Goal: No relying on AutoIt](http://raa.ruby-lang.org/project/win32-guitest/)
