@@ -52,6 +52,17 @@ module AutoIt
     false if AI.IsAdmin == 0
   end
   
+  # Shuts down the computer, good luck testing this one
+  # Returns:: 1 on success, 0 on failure
+  def shutdown(options = {})
+    code = 0
+    code += 1 if options[:shutdown]
+    code += 2 if options[:reboot]
+    code += 4 if options[:force]
+    code += 8 if options[:powerdown]
+    AI.Shutdown(code)
+  end
+
   
   # This class holds the clipboard object. Currently the new
   # method does nothing, use get and put to interact.
@@ -291,6 +302,110 @@ module AutoIt
     # Returns:: 1 on success
     def wheel(direction, clicks = 1)
       AI.MouseWheel(direction, clicks)
+    end
+  end
+  
+  
+  # This class deals with processes, including the running of 
+  # programs, scripts, etc. 
+  
+  class Process
+    
+    # Runs an executable unless it already exists
+    # Returns:: multiple possibilities
+    def initialize(name, options = {})
+      # Check if it already exists
+      unless (@process_id = AI.ProcessExists(name)) == 0
+        return true
+      end
+      
+      # Check if running as another user
+      if options[:user] && options[:domain] && options[:password]
+        AI.RunAsSet(options[:user], options[:domain], options[:password])
+      end
+      
+      # How to start program
+      flag = case options[:flag]
+        when :hide then AI.SW_HIDE
+        when :minimize then AI.SW_MINIMIZE
+        when :maximize then AI.SW_MAXIMIZE
+        else nil
+      end
+      
+      # Are we waiting or not
+      if options[:wait]
+        AI.RunWait(name, options[:workingdir], flag)
+      else
+        @process_id = AI.Run(name, options[:workingdir], flag)
+      end
+    end
+    
+    # Terminates the process
+    # Returns:: 1 on success
+    def destroy
+      AI.ProcessClose(@process_id)
+    end
+    
+    # Sets the process priority
+    # Returns:: 1 on success 0 on failure
+    def priority=(priority)
+      AI.ProcessSetPriority(@process_id, priority)
+    end
+    
+    # FIXME: This class doesn't make a lot of sense and is missing some functions
+  end
+  
+  
+  # Class description
+  
+  class Registry
+    
+    # New
+    # Returns:: nil
+    def initialize
+      
+    end
+    
+    # Reads a value from the registry
+    # Returns:: the value or error code
+    def read(key, value)
+      AI.RegRead(key, value)
+    end
+    
+    # Writes a value of type to the registry
+    # Returns:: 1 on success, 0 on failure
+    def write(key, valuename, type, value)
+      AI.RegWrite(key, valuename, type, value)
+    end
+    
+    # Deletes a value or an entire key, DANGEROUS!
+    # Returns:: 1 on success, 0 on failure
+    def delete(key, value)
+      if value
+        AI.RegDeleteKey(key)
+      else
+        AI.RegDeleteVal(key, value)
+      end
+    end
+    
+    # Gets a list of keys under the specified key
+    # Returns:: an array of size number
+    def keys(key, number = 1)
+      ret = []
+      number.times do |i|
+        ret << AI.RegEnumKey(key, i)
+      end
+      ret
+    end
+    
+    # Gets a list of values under the specified key
+    # Returns:: an array of size number
+    def values(key, number = 1)
+      ret = []
+      number.times do |i|
+        ret << AI.RegEnumValue(key, i)
+      end
+      ret
     end
   end
   
