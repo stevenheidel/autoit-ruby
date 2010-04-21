@@ -410,11 +410,12 @@ module AutoIt
   end
   
   
-  # Class description
+  # This mega-class deals with windows and window
+  # management. Controls are a subset of windows.
   
-  class TheClass
+  class Window
     
-    # Method description
+    # New
     def initialize
       
     end
