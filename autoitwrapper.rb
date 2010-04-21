@@ -157,26 +157,56 @@ module AutoIt
   end
   
   
-  # This class deals with pixels on the screen.
+  # This class deals with pixels on the screen. This is for
+  # one pixel only.
   
   class Pixel
     
-    # New
+    # Stores the colour of the pixel at x, y
     # Returns:: nil
-    def initialize
-      
+    def initialize(x, y)
+      @colour = AI.PixelGetColour(x, y)
     end
     
-    def checksum
-      
+    # Gets the colour of the pixel
+    # Returns:: colour
+    def colour
+      @colour.to_s
     end
     
-    def get_colour
-      
+    # Determines whether the pixel has changed (Minesweeper anyone?)
+    # Returns:: true or false
+    def changed?
+      @colour != AI.PixelGetColour(x, y)
+    end
+  end
+  
+  # This class deals with rectangular areas of pixels
+  # on the screen. Will eventually include OCR.
+  
+  
+  class PixelArea
+    
+    # Generates a checksum for later use on the pixel area
+    # Returns:: the checksum
+    def initialize(left, top, right, bottom, step = 1)
+      @left = left
+      @top = top
+      @right = right
+      @bottom = bottom
+      @checksum = AI.PixelChecksum(left, top, right, bottom, step)
     end
     
-    def search
-      
+    # Find a colour in an area
+    # Returns:: coordinates of first colour found or 1 if not found
+    def search(colour, variation = 0, step = 1)
+      AI.PixelSearch(left, top, right, bottom, colour, shade-variation, step)
+    end
+    
+    # Determine if anything has changed in the area
+    # Returns:: true or false
+    def changed?(step = 1)
+      @checksum != AI.PixelChecksum(@left, @top, @right, @bottom, step)
     end
   end
   
@@ -418,6 +448,17 @@ module AutoIt
     # New
     def initialize
       
+    end
+    
+    
+    # This class deals with the controls inside windows.
+    # These methods are more reliable than mouse/keyboard ones.
+    class Control
+      
+      # New
+      def initialize
+        
+      end
     end
   end
   
