@@ -22,6 +22,36 @@ module AutoIt
     raise "AutoItX3 is not installed properly"
   end
   
+  # GENERAL METHODS
+  
+  # Sets some general AutoIt options
+  # Returns:: nil
+  def autoit_options=(options = {})
+    options.each do |key, value|
+      AI.AutoItSetOption(key.to_s, value)
+    end
+    # FIXME: return old option values
+  end
+  
+  # Blocks user input, very useful
+  # Returns:: nil
+  def block_input
+    AI.BlockInput(1)
+  end
+  
+  # Unblocks user input, don't forget
+  # Returns:: nil
+  def unblock_input
+    AI.BlockInput(0)
+  end
+  
+  # Detect whether user has admistrator priveleges
+  # Returns:: true or false
+  def windows_admin?
+    true if AI.IsAdmin == 1
+    false if AI.IsAdmin == 0
+  end
+  
   
   # This class holds the clipboard object. Currently the new
   # method does nothing, use get and put to interact.
