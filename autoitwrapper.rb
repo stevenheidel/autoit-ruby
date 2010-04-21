@@ -13,7 +13,7 @@
 module AutoIt
   
   require 'win32ole'
-  require 'Win32API'
+  require 'Win32API' # Will be needed later
   
   # Make sure the DLL is registered
   begin
@@ -141,7 +141,7 @@ module AutoIt
   
   
   # This class deals with the keyboad and simulating key
-  # presses. Refer to the AutoIt documentation for synthax
+  # presses. Refer to the AutoIt documentation for synthax.
   
   class Keyboard
     
@@ -183,6 +183,84 @@ module AutoIt
     # Returns:: nothing
     def destroy
       AI.ToolTip("")
+    end
+  end
+  
+  
+  # This class deals with the simulation of mouse movement and
+  # mouse clicks. Uses absolute screen coordinates.
+  
+  class Mouse
+    
+    # New
+    # Returns:: nothing
+    def initialize
+      
+    end
+    
+    # Clicks the mouse based on an hash of options
+    # Returns:: 1 on success
+    def click(options = {})
+      AI.MouseClick(options[:button].to_s, options[:x], options[:y], options[:clicks], options[:speed])
+      # FIXME: better options and return values
+    end
+    
+    # Click and drag from point 1 to point 2
+    # Returns:: 1 on success
+    def click_drag(options = {})
+      options[:x_start] ||= posx
+      options[:y_start] ||= posy
+      AI.MouseClickDrag(options[:button].to_s, options[:x_start], options[:y_start], options[:x], options[:y], options[:speed])
+    end
+    
+    # Set the left mouse as either clicked or unclicked
+    # Returns:: 1 on success
+    def primary_state=(state)
+      AI.MouseDown("left") if state == "down"
+      AI.MouseUp("left") if state == "up"
+    end
+    
+    # Set the right mouse as either clicked or unclicked
+    # Returns:: 1 on success
+    def secondary_state=(state)
+      AI.MouseDown("right") if state == "down"
+      AI.MouseUp("right") if state == "up"
+    end
+    
+    # Gets the cursor type, refer to AutoIt for legend
+    # Returns:: cursor type constant
+    def cursor
+      AI.MouseGetCursor
+    end
+    
+    # Get the current x position of the mouse
+    # Returns:: x position
+    def posx
+      AI.MouseGetPosX
+    end
+    
+    # Get the current y position of the mouse
+    # Returns:: y position
+    def posy
+      AI.MouseGetPosY
+    end
+    
+    # Get the current position of the mouse as a hash
+    # Returns:: position
+    def pos
+      {:x => posx, :y => posy}
+    end
+    
+    # Moves the mouse pointer to a specified position
+    # Returns:: 1 on success
+    def move(x, y, speed = 10)
+      AI.MouseMove(x, y, speed)
+    end
+    
+    # Scrolls the mouse wheel
+    # Returns:: 1 on success
+    def wheel(direction, clicks = 1)
+      AI.MouseWheel(direction, clicks)
     end
   end
   
