@@ -453,6 +453,7 @@ module AutoIt
     
     # This class deals with the controls inside windows.
     # These methods are more reliable than mouse/keyboard ones.
+    
     class Control
       
       # New

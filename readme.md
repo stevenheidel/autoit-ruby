@@ -12,7 +12,7 @@ AutoIt was initially designed for PC "roll out" situations to reliably automate 
 
 Features:
 
-- Easy to learn BASIC-like syntax
+- Easy to learn <strike>BASIC-like syntax</strike> RUBY!
 - Simulate keystrokes and mouse movements
 - Manipulate windows and processes
 - Interact with all standard windows controls
@@ -46,7 +46,7 @@ The goal of this project is to bring Windows API access and automation to Ruby. 
         require 'autoitwrapper.rb' # make sure the file is in the same directory
         include AutoIt # useful if you don't want to always use AutoIt:: before everything
 
-3. Start automating windows. (WARNING: hardly anything works yet, look at the "Contribute" section)
+3. Start automating windows. (TODO: more examples to come)
 
         # Clipboard Access
         clipboard = Clipboard.new
@@ -64,6 +64,7 @@ Things to do:
 - Add remainder of functions as described in the AutoItX3 help file
 - Standardize the return values and error outcomes
 - Send me ideas on what functions/classes should do in order to make the most sense
+- Add tests, documentation, and more examples
 
 ## Useful Links
 
