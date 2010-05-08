@@ -49,9 +49,8 @@ The goal of this project is to bring Windows API access and automation to Ruby. 
 3. Start automating windows. (TODO: more examples to come)
 
         # Clipboard Access
-        clipboard = Clipboard.new
-        clipboard.put "I love ruby!", " Go to http://github.com/stevenheidel/ruby-autoit to contribute."
-        puts clipboard.get.upcase[0..11] #=> "I LOVE RUBY!"
+        Clipboard.puts "I love ruby!", " Go to http://github.com/stevenheidel/ruby-autoit to contribute."
+        Clipboard.gets.upcase[0..11] #=> "I LOVE RUBY!"
 
 4. Read the documentation for how to use. (TODO: generate RDoc documentation)
 
