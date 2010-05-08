@@ -1,4 +1,4 @@
-# Ruby AutoIt Wrapper
+# Ruby Wrapper for AutoIt
 
 **A wrapper for the AutoItX3 DLL on windows to control the windows API**
 

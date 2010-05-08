@@ -69,26 +69,21 @@ module AutoIt
   
   class Clipboard
     
-    # New
-    # Returns:: nil
-    def initialize
-      # Perhaps some way of storing history could happen
-    end
-    
     # Get the last text copied to the clipboard
     # Returns:: text or 0 on error
-    def get
+    def self.gets
       AI.ClipGet
       # FIXME: return false or raise error
     end
     
     # Use like "puts" to copy text to the clipboard
     # Returns:: nil on success or 0 on error
-    def put(*args)
+    def self.puts(*args)
       string = ""
       args.each do |arg|
         string += arg.to_s
       end
+      
       AI.ClipPut(string)
       # FIXME: return true and false or raise error
     end
@@ -216,15 +211,9 @@ module AutoIt
   
   class Keyboard
     
-    # New
-    # Returns:: nil
-    def initialize
-      # Perhaps setting a delay and other options
-    end
-    
     # Send a series of keys using strings
     # Returns::
-    def send(*args)
+    def self.send(*args)
       args.each do |arg|
         AI.send(arg.to_s)
       end
@@ -262,23 +251,17 @@ module AutoIt
   # mouse clicks. Uses absolute screen coordinates.
   
   class Mouse
-    
-    # New
-    # Returns:: nothing
-    def initialize
-      
-    end
-    
+  
     # Clicks the mouse based on an hash of options
     # Returns:: 1 on success
-    def click(options = {})
+    def self.click(options = {})
       AI.MouseClick(options[:button].to_s, options[:x], options[:y], options[:clicks], options[:speed])
       # FIXME: better options and return values
     end
     
     # Click and drag from point 1 to point 2
     # Returns:: 1 on success
-    def click_drag(options = {})
+    def self.click_drag(options = {})
       options[:x_start] ||= posx
       options[:y_start] ||= posy
       AI.MouseClickDrag(options[:button].to_s, options[:x_start], options[:y_start], options[:x], options[:y], options[:speed])
@@ -286,51 +269,51 @@ module AutoIt
     
     # Set the left mouse as either clicked or unclicked
     # Returns:: 1 on success
-    def primary_state=(state)
+    def self.primary_state=(state)
       AI.MouseDown("left") if state == "down"
       AI.MouseUp("left") if state == "up"
     end
     
     # Set the right mouse as either clicked or unclicked
     # Returns:: 1 on success
-    def secondary_state=(state)
+    def self.secondary_state=(state)
       AI.MouseDown("right") if state == "down"
       AI.MouseUp("right") if state == "up"
     end
     
     # Gets the cursor type, refer to AutoIt for legend
     # Returns:: cursor type constant
-    def cursor
+    def self.cursor
       AI.MouseGetCursor
     end
     
     # Get the current x position of the mouse
     # Returns:: x position
-    def posx
+    def self.posx
       AI.MouseGetPosX
     end
     
     # Get the current y position of the mouse
     # Returns:: y position
-    def posy
+    def self.posy
       AI.MouseGetPosY
     end
     
     # Get the current position of the mouse as a hash
     # Returns:: position
-    def pos
+    def self.pos
       {:x => posx, :y => posy}
     end
     
     # Moves the mouse pointer to a specified position
     # Returns:: 1 on success
-    def move(x, y, speed = 10)
+    def self.move(x, y, speed = 10)
       AI.MouseMove(x, y, speed)
     end
     
     # Scrolls the mouse wheel
     # Returns:: 1 on success
-    def wheel(direction, clicks = 1)
+    def self.wheel(direction, clicks = 1)
       AI.MouseWheel(direction, clicks)
     end
   end
@@ -390,27 +373,21 @@ module AutoIt
   
   class Registry
     
-    # New
-    # Returns:: nil
-    def initialize
-      
-    end
-    
     # Reads a value from the registry
     # Returns:: the value or error code
-    def read(key, value)
+    def self.read(key, value)
       AI.RegRead(key, value)
     end
     
     # Writes a value of type to the registry
     # Returns:: 1 on success, 0 on failure
-    def write(key, valuename, type, value)
+    def self.write(key, valuename, type, value)
       AI.RegWrite(key, valuename, type, value)
     end
     
     # Deletes a value or an entire key, DANGEROUS!
     # Returns:: 1 on success, 0 on failure
-    def delete(key, value)
+    def self.delete(key, value)
       if value
         AI.RegDeleteKey(key)
       else
@@ -420,7 +397,7 @@ module AutoIt
     
     # Gets a list of keys under the specified key
     # Returns:: an array of size number
-    def keys(key, number = 1)
+    def self.keys(key, number = 1)
       ret = []
       number.times do |i|
         ret << AI.RegEnumKey(key, i)
@@ -430,7 +407,7 @@ module AutoIt
     
     # Gets a list of values under the specified key
     # Returns:: an array of size number
-    def values(key, number = 1)
+    def self.values(key, number = 1)
       ret = []
       number.times do |i|
         ret << AI.RegEnumValue(key, i)
@@ -461,6 +438,17 @@ module AutoIt
         
       end
     end
+  end
+  
+  private
+  
+  
+  # Converts the weird AutoIt returns into familiar true/false
+  # Also puts the Auto It Error (or "airer" :) to $stderr
+  def airer(value, show_error = false)
+    $stderr.puts AI.Error if show_error
+    
+    value != 0
   end
   
 end
