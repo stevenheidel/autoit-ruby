@@ -10,25 +10,6 @@ AutoIt v3 is a freeware BASIC-like scripting language designed for automating th
 
 AutoIt was initially designed for PC "roll out" situations to reliably automate and configure thousands of PCs. Over time it has become a powerful language that supports complex expressions, user functions, loops and everything else that veteran scripters would expect.
 
-Features:
-
-- Easy to learn <strike>BASIC-like syntax</strike> RUBY!
-- Simulate keystrokes and mouse movements
-- Manipulate windows and processes
-- Interact with all standard windows controls
-- Scripts can be compiled into standalone executables
-- Create Graphical User Interfaces (GUIs)
-- COM support
-- Regular expressions
-- Directly call external DLL and Windows API functions
-- Scriptable RunAs functions
-- Detailed helpfile and large community-based support forums
-- Compatible with Windows 95 / 98 / ME / NT4 / 2000 / XP / 2003 / Vista / 2008
-- Unicode and x64 support
-- Digitally signed for peace of mind
-- Works with Windows Vista's User Account Control (UAC)
-- AutoIt has been designed to be as small as possible and stand-alone with no external .dll files or registry entries required making it safe to use on Servers. Scripts can be compiled into stand-alone executables with Aut2Exe.
-
 **Also supplied is a combined COM and DLL version of AutoIt called AutoItX that allows you to add the unique features of AutoIt to your own favourite scripting or programming languages!**
 
 ## Problems with AutoIt and how Ruby can help
